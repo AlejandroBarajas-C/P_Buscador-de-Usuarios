@@ -1,35 +1,27 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from 'react';
+import './App.css';
+import Header from './Header.jsx';
+import { useState } from 'react';
+import {mock1} from "./constants/users.js";
+import Resultados from './Resultados.jsx'
+
 
 function App() {
-  const [count, setCount] = useState(0)
+    const[query, setQuery] = useState("");  //Cada vez que se recarga se pinta la aplicación
+    const [resultado, setResultado] = useState(null);
 
-  return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    const callServer = () => {
+        console.log("CLICK!");
+        setResultado(mock1.users)
+    }
+    
+    return (
+        <div className="App">
+           <Header/>
+           <h2 id="buscador">Buscador de Usuarios</h2>
+           <input type="text" id="query" value={query} onChange={e=>setQuery(e.target.value)} placeholder='Texto a buscar'/>ç
+           <button id="botonsearch" onClick={()=>callServer()}>Buscar</button>
+            {resultado && <Resultados resultado={resultado}/>}      //Debo primero comprobar que resultado tenga valor si no, no imprimo para no dar error
+        </div>
+    );
 }
-
-export default App
