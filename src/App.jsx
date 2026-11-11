@@ -4,15 +4,25 @@ import Header from './Header.jsx';
 import { useState } from 'react';
 import {mock1} from "./constants/users.js";
 import Resultados from './Resultados.jsx'
+import CONFIG from "./config/config.js";
+import { resolveConfig } from 'vite';
+
 
 
 function App() {
     const[query, setQuery] = useState("");  //Cada vez que se recarga se pinta la aplicación
     const [resultado, setResultado] = useState(null);
 
-    const callServer = () => {
+    const callServer = async() => {
         console.log("CLICK!");
-        setResultado(mock1.users)
+        if(CONFIG.use_server){
+            const response = await fetch(CONFIG.server_url);
+            const data = await response.json();
+            console.log(data);
+            setResultado(data.users);
+        }else{
+            setResultado(mock1.users)
+        }
     }
     
     return (
