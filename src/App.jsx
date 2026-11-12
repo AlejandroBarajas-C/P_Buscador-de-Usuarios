@@ -5,7 +5,8 @@ import { useState } from 'react';
 import {mock1} from "./constants/users.js";
 import Resultados from './Resultados.jsx'
 import CONFIG from "./config/config.js";
-import { resolveConfig } from 'vite';
+//import { resolveConfig } from 'vite';
+import Formulario from './Formulario.jsx';
 
 
 
@@ -41,8 +42,7 @@ function App() {
         <div className="App">
            <Header/>
            <h2 id="buscador">Buscador de Usuarios</h2>
-           <input type="text" id="query" value={query} onChange={e=>setQuery(e.target.value)} placeholder='Texto a buscar'/>ç
-           <button id="botonsearch" onClick={()=>callServer()}>Buscar</button>
+           <Formulario contenido={query} setContenido={setQuery} callServer={callServer}/>
            <button id='botonAll' onClick={callServer("all")}>Buscar Todos</button>
             {error && <h1>Ha habido un error: {error.desciption}</h1>}
             {resultado && <Resultados resultado={resultado}/>}      //Debo primero comprobar que resultado tenga valor si no, no imprimo para no dar error
