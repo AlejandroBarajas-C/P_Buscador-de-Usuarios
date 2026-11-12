@@ -12,6 +12,7 @@ import { resolveConfig } from 'vite';
 function App() {
     const[query, setQuery] = useState("");  //Cada vez que se recarga se pinta la aplicación
     const [resultado, setResultado] = useState(null);
+    const [error, serError] = useState(null);
 
     const callServer = async() => {
         console.log("CLICK!");
@@ -29,6 +30,7 @@ function App() {
             setResultado(data.users);
             } catch(error){
                 console.log(error);
+                setError({desciption: error.message})
             }
         }else{
             setResultado(mock1.users)
@@ -42,6 +44,7 @@ function App() {
            <input type="text" id="query" value={query} onChange={e=>setQuery(e.target.value)} placeholder='Texto a buscar'/>ç
            <button id="botonsearch" onClick={()=>callServer()}>Buscar</button>
            <button id='botonAll' onClick={callServer("all")}>Buscar Todos</button>
+            {error && <h1>Ha habido un error: {error.desciption}</h1>}
             {resultado && <Resultados resultado={resultado}/>}      //Debo primero comprobar que resultado tenga valor si no, no imprimo para no dar error
         </div>
     );
